@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import {
     Card,
@@ -10,43 +10,37 @@ import {
 } from "./ui/card";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-
-import { useSelector, useDispatch } from "react-redux";
-import {
-    setFistName,
-    setLastName,
-    setPassword,
-    setUserName,
-} from "../app/users/usersSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setUsername, setPassword } from "../app/users/loggedInUserSlice";
 import axios from "axios";
-export const SignupComponent = () => {
-    const firstName = useSelector((state) => state.users.firstName);
-    const lastName = useSelector((state) => state.users.lastName);
-    const username = useSelector((state) => state.users.username);
-    const password = useSelector((state) => state.users.password);
+export const SigninComponent = () => {
+    const username = useSelector((state) => state.loggedInUser.username);
+    const password = useSelector((state) => state.loggedInUser.password);
+
     const dispatch = useDispatch();
 
-    const signupHandler = async (e) => {
+    const navigate = useNavigate();
+
+    const signInHandler = async (e) => {
         e.preventDefault();
         try {
             const result = await axios.post(
-                "http://localhost:3010/api/v1/users/signup",
+                "http://localhost:3010/api/v1/users/signin",
                 {
                     username,
-                    firstName,
-                    lastName,
                     password,
                 }
             );
             if (result.data.success) {
-                dispatch(setUserName(""));
-                dispatch(setFistName(""));
-                dispatch(setLastName(""));
+                console.log(result.headers);
+                const token = result.headers.token;
+                localStorage.setItem("token", token);
+                dispatch(setUsername(""));
                 dispatch(setPassword(""));
+                navigate("/dashboard");
             }
-            console.log("result", result.data);
         } catch (err) {
-            console.log("err", err);
+            console.log(err);
         }
     };
     return (
@@ -54,41 +48,25 @@ export const SignupComponent = () => {
             <Card className="w-1/3 flex flex-col items-center">
                 <CardHeader className="flex flex-col items-center">
                     <CardTitle className="font-bold text-2xl">
-                        Sign Up
+                        Sign In
                     </CardTitle>
                     <CardDescription>
-                        Enter your information to create an account
+                        Enter your credentials to access your account
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="w-2/3">
                     <form
                         action=""
                         className="flex flex-col space-y-3"
-                        onSubmit={signupHandler}
+                        onSubmit={signInHandler}
                     >
-                        <Label>First Name</Label>
-                        <Input
-                            placeholder="John"
-                            value={firstName}
-                            onChange={(e) => {
-                                dispatch(setFistName(e.target.value));
-                            }}
-                        ></Input>
-                        <Label className="text-m">Last Name</Label>
-                        <Input
-                            placeholder="Doe"
-                            value={lastName}
-                            onChange={(e) => {
-                                dispatch(setLastName(e.target.value));
-                            }}
-                        ></Input>
-                        <Label className="text-m">Email</Label>
+                        <Label className="text-md">Email</Label>
                         <Input
                             type="email"
                             value={username}
                             placeholder="johndoe@mail.com"
                             onChange={(e) => {
-                                dispatch(setUserName(e.target.value));
+                                dispatch(setUsername(e.target.value));
                             }}
                         ></Input>
                         <Label className="text-m">Password</Label>
@@ -101,14 +79,14 @@ export const SignupComponent = () => {
                             }}
                         ></Input>
                         <Button className="bg-black text-white w-full hover:bg-white hover:text-black">
-                            Sign Up
+                            Sign In
                         </Button>
                     </form>
                 </CardContent>
                 <CardFooter className="flex flex-row items-center">
-                    Already have an account?&nbsp;
-                    <Link to="/signin" className="underline">
-                        Sign In
+                    Don&apos;t have an account?&nbsp;
+                    <Link to="/signup" className="underline">
+                        Sign Up
                     </Link>
                 </CardFooter>
             </Card>

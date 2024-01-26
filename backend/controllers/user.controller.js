@@ -1,5 +1,5 @@
 const { getConnection } = require("../db");
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 const db = getConnection();
 const jwt = require('jsonwebtoken');
 const config = require("../config");
@@ -55,7 +55,7 @@ const signinController = async (req,res,next) =>{
         userId: userDetails['_id']
     },config.JWT_SECRET)
 
-    return res.set('Token',token)
+    res.set('Token',token)
     return res.status(201).send({
         success:true,
         message:"user authenticated successfully"

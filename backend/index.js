@@ -13,7 +13,12 @@ const { userAuthentication } = require('./auth');
 const port = 3010;
 
 app.use(express.json())
-app.use(cors())
+
+const corsOptions = {
+    exposedHeaders: 'Token',
+};
+
+app.use(cors(corsOptions))
 
 const router = express.Router()
 
