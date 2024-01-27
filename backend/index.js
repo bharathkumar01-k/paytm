@@ -50,3 +50,4 @@ server.on('listening',()=>{
     console.log("The app is listening on port - ",port)
 })
 
+module.exports = app;
