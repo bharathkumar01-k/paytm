@@ -154,7 +154,7 @@ export const Dashboard = () => {
                 <div>
                     <nav className="flex justify-between p-4">
                         <div className="text-3xl font-bold">Payments App</div>
-                        <div className="flex items-center space-x-2">
+                        <div className="flex flex-col-reverse md:flex-row items-end md:items-center space-x-2">
                             <div>Hello, {firstName}</div>
                             <Avatar>
                                 <AvatarFallback className="bg-gray-200">
@@ -171,13 +171,13 @@ export const Dashboard = () => {
                         <div className="ml-4 text-2xl font-bold py-4 ">
                             Users
                         </div>
-                        <div className="ml-4 w-[98%] ">
+                        <div className="w-[90%] m-6 md:m-0 md:ml-4 md:w-[98%] ">
                             <Input
                                 className="rounded-lg"
                                 onChange={inputChangeHandler}
                             />
                         </div>
-                        <div className="border-2 border-black ml-4  w-[98%] flex flex-col h-[450px] overflow-y-auto">
+                        <div className="border-2 m-6 border-black md:m-0 md:ml-4 w-[90%] md:w-[98%] flex flex-col h-[300px] md:h-[450px] overflow-y-auto">
                             {usersList.map((user, idx) => {
                                 return (
                                     <div
@@ -192,7 +192,7 @@ export const Dashboard = () => {
                                             </Avatar>
                                             <div>{`${user.firstName} ${user.lastName}`}</div>
                                         </div>
-                                        <Dialog>
+                                        <Dialog className="w-[90%] md:w-[100%]">
                                             <DialogTrigger asChild={true}>
                                                 <Button className="mr-2 bg-black text-white rounded-lg hover:bg-white hover:text-black">
                                                     Send Money

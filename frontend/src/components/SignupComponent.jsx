@@ -1,5 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import { Button } from "./ui/button";
+import { BellIcon } from "@radix-ui/react-icons";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import {
     Card,
     CardContent,
@@ -14,6 +16,7 @@ import { Label } from "./ui/label";
 import { useSelector, useDispatch } from "react-redux";
 import {
     setFistName,
+    setIsSignupSuccessful,
     setLastName,
     setPassword,
     setUserName,
@@ -24,6 +27,9 @@ export const SignupComponent = () => {
     const lastName = useSelector((state) => state.users.lastName);
     const username = useSelector((state) => state.users.username);
     const password = useSelector((state) => state.users.password);
+    const isSignupSuccessful = useSelector(
+        (state) => state.users.isSignupSuccessful
+    );
     const dispatch = useDispatch();
 
     const signupHandler = async (e) => {
@@ -39,6 +45,7 @@ export const SignupComponent = () => {
                 }
             );
             if (result.data.success) {
+                dispatch(setIsSignupSuccessful(true));
                 dispatch(setUserName(""));
                 dispatch(setFistName(""));
                 dispatch(setLastName(""));
@@ -51,7 +58,7 @@ export const SignupComponent = () => {
     };
     return (
         <div className="h-screen flex items-center justify-center">
-            <Card className="w-1/3 flex flex-col items-center">
+            <Card className="w-[90%] md:w-1/3 flex flex-col items-center">
                 <CardHeader className="flex flex-col items-center">
                     <CardTitle className="font-bold text-2xl">
                         Sign Up
@@ -104,6 +111,23 @@ export const SignupComponent = () => {
                             Sign Up
                         </Button>
                     </form>
+                    {isSignupSuccessful && (
+                        <Alert className="flex items-center mt-6 rounded bg-slate-300">
+                            <BellIcon />
+                            <div>
+                                <AlertTitle className="font-bold">
+                                    Signup Successful!
+                                </AlertTitle>
+                                <AlertDescription>
+                                    Please{" "}
+                                    <Link to="/signin" className="underline">
+                                        Sign In
+                                    </Link>
+                                    &nbsp; to Continue
+                                </AlertDescription>
+                            </div>
+                        </Alert>
+                    )}
                 </CardContent>
                 <CardFooter className="flex flex-row items-center">
                     Already have an account?&nbsp;

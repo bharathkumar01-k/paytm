@@ -4,7 +4,8 @@ const initialState = {
     firstName:"",
     lastName:"",
     username:"",
-    password:""
+    password:"",
+    isSignupSuccessful:false
 }
 
 export const userSlice = createSlice({
@@ -22,9 +23,12 @@ export const userSlice = createSlice({
         },
         setPassword: (state,action) => {
             state.password = action.payload
+        },
+        setIsSignupSuccessful: (state,action) => {
+            state.isSignupSuccessful = action.payload
         }
     }
 })
 
-export const {setUserName,setFistName,setLastName,setPassword} = userSlice.actions
+export const {setUserName,setFistName,setLastName,setPassword,setIsSignupSuccessful} = userSlice.actions
 export default userSlice.reducer
