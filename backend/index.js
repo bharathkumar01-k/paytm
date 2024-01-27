@@ -23,6 +23,11 @@ app.use(cors(corsOptions))
 const router = express.Router()
 
 
+app.get('/',(req,res,next) => {
+    res.status(200).json({
+        succss:true
+    })
+})
 
 app.use('/api/v1/users',router)
 userRouter(router);
