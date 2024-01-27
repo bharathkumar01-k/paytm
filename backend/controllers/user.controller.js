@@ -9,7 +9,7 @@ const signupController = async (req,res,next) => {
     const body = req.body;
     const findResult = await db.collection('user').findOne({username:body.username})
     if(findResult){
-        return res.status(411).send({
+        return res.status(411).json({
             success:false,
             message: "Email already taken / Incorrect inputs"
         })
@@ -24,7 +24,7 @@ const signupController = async (req,res,next) => {
         balance: Math.floor(Math.random() * 10000) + 1 
     })
     
-    return res.status(201).send({
+    return res.status(201).json({
         success:true,
         message: "User created successfully",
         
@@ -37,7 +37,7 @@ const signinController = async (req,res,next) =>{
     console.log('user details',userDetails)
     if(!userDetails){
         console.log('inside ifff 1')
-        return res.status(411).send({
+        return res.status(411).json({
             success:false,
             message: "Error while logging in"
         })
@@ -46,7 +46,7 @@ const signinController = async (req,res,next) =>{
     console.log('password',comparePassword)
     if(!comparePassword){
         console.log('inside ifff 2')
-        return res.status(411).send({
+        return res.status(411).json({
             success:false,
             message: "Incorrect password"
         })
@@ -56,7 +56,7 @@ const signinController = async (req,res,next) =>{
     },config.JWT_SECRET)
 
     res.set('Token',token)
-    return res.status(201).send({
+    return res.status(201).json({
         success:true,
         message:"user authenticated successfully"
     })
@@ -71,7 +71,7 @@ const userDetailsController = async(req,res,next) =>{
     }
     const result = await db.collection('user').updateOne({_id:new ObjectId(req.userId.userId)},{$set:{...body}})
     console.log('result',result)
-    return res.status(201).send({
+    return res.status(201).json({
         status:true,
         message:"Updated successfully"
     })

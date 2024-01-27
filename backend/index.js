@@ -2,8 +2,6 @@ const http = require('http')
 const express = require('express');
 const app = express()
 
-const server = http.createServer(app)
-
 const cors = require('cors')
 
 const userRouter = require('./router/user.route');
@@ -39,15 +37,14 @@ accountRouter(router)
 
 app.use((err,req,res,next) => {
     console.log(err);
-    return res.status(500).send({
+    return res.status(500).json({
         succss:false,
         error:err
     })
 })
-server.listen(port)
 
-server.on('listening',()=>{
-    console.log("The app is listening on port - ",port)
+app.listen(3010,()=>{
+    console.log('app is listening on port',3010)
 })
 
-module.exports = server;
+module.exports = app;

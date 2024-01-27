@@ -10,7 +10,7 @@ const signupValidator = (req,res,next) =>{
     })
     const result = signupDetails.safeParse(body);
     if(!result.success){
-        return res.status(411).send({
+        return res.status(411).json({
             success: false,
             message: "Email already taken / Incorrect inputs"
         })
@@ -25,7 +25,7 @@ const signinValidator = (req,res,next) =>{
     })
     const result = signinDetails.safeParse(body);
     if(!result.success){
-        return res.status(411).send({
+        return res.status(411).json({
             success: false,
             message: "Error while logging in",
             error:result.error
@@ -43,7 +43,7 @@ const userValidator = (req,res,next) =>{
     })
     const result = userDetails.safeParse(body);
     if(!result.success){
-        return res.status(411).send({
+        return res.status(411).json({
             success:false,
             message:"Error while updating information",
             error:result.error
@@ -59,7 +59,7 @@ const getUserValidator = (req,res,next) =>{
     })
     const result = getUserDetails.safeParse(param);
     if(!result.success){
-        return res.status(411).send({
+        return res.status(411).json({
             success:false,
             message:"Error while updating information",
             error:result.error

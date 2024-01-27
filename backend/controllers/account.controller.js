@@ -8,7 +8,7 @@ const getBalanceController = async (req,res) =>{
     const userId = req.userId.userId;
     const accountDetail = await db.collection('accounts').findOne({user_id:new ObjectId(userId)})
     console.log('user details',accountDetail);
-    return res.status(200).send({
+    return res.status(200).json({
         success:true,
         balance: accountDetail.balance
     })
@@ -23,7 +23,7 @@ const transferController = async (req,res) => {
         const accountDetail =await db.collection('accounts').findOne({user_id:new ObjectId(userId)})
         if(body.amount > accountDetail.balance){
             await session.abortTransaction()
-            return res.status(400).send({
+            return res.status(400).json({
                 success:false,
                 message:"Insufficient balance"
             })
@@ -44,7 +44,7 @@ const transferController = async (req,res) => {
         }
         await session.commitTransaction();
         console.log("transaction commmited successfully")
-        return res.status(201).send({
+        return res.status(201).json({
             success:true,
             message:"Transfer successful"
         })

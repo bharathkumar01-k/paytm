@@ -8,7 +8,7 @@ const transferValidator = (req, res, next) =>{
     })
     const result = transferDetails.safeParse(body);
     if(!result.success){
-        return res.status(400).send({
+        return res.status(400).json({
             success:false,
             message:"bad request",
             error: result.error

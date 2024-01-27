@@ -5,7 +5,7 @@ const userAuthentication = (req,res,next) => {
     const authorization = req.headers?.authorization
     console.log(typeof(authorization))
     if(!authorization || !authorization.startsWith('Bearer')){
-        return res.status(403).send({
+        return res.status(403).json({
             success:false
         })
     }
@@ -15,7 +15,7 @@ const userAuthentication = (req,res,next) => {
         req.userId = userId
     }
     catch(e){
-        return res.status(403).send({
+        return res.status(403).json({
             success:false,
             error:e
         })
