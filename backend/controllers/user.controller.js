@@ -88,10 +88,6 @@ const getBulkUsersController = async (req,res) =>{
             lastName: {
                 "$regex": filter
             }
-        },{
-            username:{
-                "$regex":filter
-            }
         }]
     },{projection:{
         _id:1,
@@ -107,7 +103,49 @@ const getBulkUsersController = async (req,res) =>{
     
 }
 
+const getCurrentUserDetails = async (req,res) => {
+    const userId = req.userId.userId;
+    console.log('user id',userId)
+    const pipeline = []
+    pipeline.push({
+        $match:{
+            _id:new ObjectId(userId)
+        }
+    })
+    pipeline.push({
+        $lookup:{
+            from:"accounts",
+            localField:"_id",
+            foreignField:"user_id",
+            as:"user_mapping"
+        }
+    })
+    pipeline.push(
+        {
+            $set:{
+                user_mapping:{$first: "$user_mapping"}
+            }
+        },  
+        {
+        $set:{
+            balance:"$user_mapping.balance",
+            user_id:"$user_mapping.user_id"
+        }
+    })
+    pipeline.push({
+        $unset:['password','user_mapping','_id']
+    })
+    const cursor = db.collection('user').aggregate(pipeline)
+    const result =await cursor.toArray()
+    console.log('result',JSON.stringify(result,0,5))
+    return res.status(200).json({
+        success:true,
+        user_details:result[0]
+    })
+}
+
 exports.signupController = signupController;
 exports.signinController = signinController;
 exports.userDetailsController = userDetailsController;
 exports.getBulkUsersController = getBulkUsersController;
+exports.getCurrentUserDetails = getCurrentUserDetails;

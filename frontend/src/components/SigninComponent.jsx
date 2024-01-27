@@ -35,8 +35,7 @@ export const SigninComponent = () => {
                 console.log(result.headers);
                 const token = result.headers.token;
                 localStorage.setItem("token", token);
-                dispatch(setUsername(""));
-                dispatch(setPassword(""));
+                setPassword("");
                 navigate("/dashboard");
             }
         } catch (err) {
