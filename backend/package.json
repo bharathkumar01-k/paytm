@@ -16,5 +16,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
     "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.6.1"
   }
 }
