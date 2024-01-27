@@ -27,6 +27,7 @@ export const SignupComponent = () => {
     const lastName = useSelector((state) => state.users.lastName);
     const username = useSelector((state) => state.users.username);
     const password = useSelector((state) => state.users.password);
+
     const isSignupSuccessful = useSelector(
         (state) => state.users.isSignupSuccessful
     );
@@ -75,6 +76,7 @@ export const SignupComponent = () => {
                     >
                         <Label>First Name</Label>
                         <Input
+                            required
                             placeholder="John"
                             value={firstName}
                             onChange={(e) => {
@@ -83,6 +85,7 @@ export const SignupComponent = () => {
                         ></Input>
                         <Label className="text-m">Last Name</Label>
                         <Input
+                            required
                             placeholder="Doe"
                             value={lastName}
                             onChange={(e) => {
@@ -91,6 +94,7 @@ export const SignupComponent = () => {
                         ></Input>
                         <Label className="text-m">Email</Label>
                         <Input
+                            required
                             type="email"
                             value={username}
                             placeholder="johndoe@mail.com"
@@ -100,6 +104,7 @@ export const SignupComponent = () => {
                         ></Input>
                         <Label className="text-m">Password</Label>
                         <Input
+                            required
                             type="password"
                             placeholder="password"
                             value={password}

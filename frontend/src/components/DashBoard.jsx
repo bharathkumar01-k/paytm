@@ -158,7 +158,7 @@ export const Dashboard = () => {
                             <div>Hello, {firstName}</div>
                             <Avatar>
                                 <AvatarFallback className="bg-gray-200">
-                                    {`${firstName?.[0].toUpperCase()}${lastName?.[0].toUpperCase()}`}
+                                    {`${firstName?.[0]?.toUpperCase()}${lastName?.[0]?.toUpperCase()}`}
                                 </AvatarFallback>
                             </Avatar>
                         </div>
@@ -187,7 +187,7 @@ export const Dashboard = () => {
                                         <div className="flex items-center  text-lg space-x-2 p-2">
                                             <Avatar>
                                                 <AvatarFallback className="bg-gray-200">
-                                                    {`${user.firstName?.[0].toUpperCase()}${user.lastName?.[0].toUpperCase()}`}
+                                                    {`${user.firstName?.[0]?.toUpperCase()}${user.lastName?.[0]?.toUpperCase()}`}
                                                 </AvatarFallback>
                                             </Avatar>
                                             <div>{`${user.firstName} ${user.lastName}`}</div>
