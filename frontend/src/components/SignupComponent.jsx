@@ -30,7 +30,7 @@ export const SignupComponent = () => {
         e.preventDefault();
         try {
             const result = await axios.post(
-                "http://localhost:3010/api/v1/users/signup",
+                "https://paytm-backend-three.vercel.app/api/v1/users/signup",
                 {
                     username,
                     firstName,

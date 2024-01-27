@@ -51,7 +51,7 @@ export const Dashboard = () => {
         const getData = async () => {
             try {
                 const currentUserDetailsResponse = await axios.get(
-                    "http://localhost:3010/api/v1/users/get_current_user_details",
+                    "https://paytm-backend-three.vercel.app/api/v1/users/get_current_user_details",
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem(
@@ -61,7 +61,7 @@ export const Dashboard = () => {
                     }
                 );
                 const bulkUsersResponse = await axios.get(
-                    "http://localhost:3010/api/v1/users/bulk?filter=",
+                    "https://paytm-backend-three.vercel.app/api/v1/users/bulk?filter=",
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem(
@@ -92,7 +92,7 @@ export const Dashboard = () => {
     const inputChangeHandler = async (e) => {
         try {
             const usersListResponse = await axios.get(
-                `http://localhost:3010/api/v1/users/bulk?filter=${e.target.value}`,
+                `https://paytm-backend-three.vercel.app/api/v1/users/bulk?filter=${e.target.value}`,
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem(
@@ -118,7 +118,7 @@ export const Dashboard = () => {
         e.preventDefault();
         console.log("user and amount", user, amount);
         const transferResponse = await axios.post(
-            "http://localhost:3010/api/v1/account/transfer",
+            "https://paytm-backend-three.vercel.app/api/v1/account/transfer",
             {
                 to: user["_id"],
                 amount: +amount,
@@ -134,7 +134,7 @@ export const Dashboard = () => {
             dispatch(setIsTransferSuccessful(true));
             dispatch(setAmount(0));
             const getBalanceResponse = await axios.get(
-                "http://localhost:3010/api/v1/account/balance",
+                "https://paytm-backend-three.vercel.app/api/v1/account/balance",
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem(
