@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 
-const client = new MongoClient('mongodb://localhost:27017')
+const client = new MongoClient()
 
 const getConnection = () =>{
     const db = client.db('paytm');

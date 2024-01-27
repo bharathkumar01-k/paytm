@@ -79,6 +79,7 @@ const userDetailsController = async(req,res,next) =>{
 
 const getBulkUsersController = async (req,res) =>{
     const {filter} = req.query;
+    const userId = req.userId.userId
     const usersCursor = db.collection('user').find({
         $or: [{
             firstName: {
@@ -96,9 +97,10 @@ const getBulkUsersController = async (req,res) =>{
         lastName:1
     }})
     const users = await usersCursor.toArray();
+    const filteredUser = users.filter((user) => user['_id'].toString()!==userId)
     return res.status(200).json({
         success:true,
-        users
+        users: filteredUser
     })
     
 }

@@ -11,11 +11,18 @@ import {
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useDispatch, useSelector } from "react-redux";
-import { setUsername, setPassword } from "../app/users/loggedInUserSlice";
+import {
+    setUsername,
+    setPassword,
+    setIsAuthenticated,
+} from "../app/users/loggedInUserSlice";
 import axios from "axios";
 export const SigninComponent = () => {
     const username = useSelector((state) => state.loggedInUser.username);
     const password = useSelector((state) => state.loggedInUser.password);
+    const isAuthenticated = useSelector(
+        (state) => state.loggedInUser.isAuthenticated
+    );
 
     const dispatch = useDispatch();
 
@@ -32,10 +39,11 @@ export const SigninComponent = () => {
                 }
             );
             if (result.data.success) {
-                console.log(result.headers);
+                dispatch(setIsAuthenticated(true));
                 const token = result.headers.token;
                 localStorage.setItem("token", token);
-                setPassword("");
+                dispatch(setPassword(""));
+                console.log(isAuthenticated);
                 navigate("/dashboard");
             }
         } catch (err) {
